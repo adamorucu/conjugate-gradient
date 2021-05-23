@@ -136,7 +136,17 @@ int main(int argc, char * argv[]){
   /*   printf("%lf ", x[i]); */
   /* printf("]\n"); */
 
-  /* write_result("result.txt", size, x); */
+  double* A = (double*)malloc(size*size*sizeof(double));
+  double* b = (double*)malloc(size*sizeof(double));
+  read_data(filename, size, A, b);
+
+  double* x = (double*)malloc(size*sizeof(double));
+  conjugate(A, b, size, x);
+
+  write_result("result.txt", size, x);
+  free(A);
+  free(b);
+  free(x);
   
   return 0;
 }
