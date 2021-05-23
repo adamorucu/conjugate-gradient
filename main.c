@@ -5,7 +5,7 @@
 /* #include <time.h> */
 /* #include <omp.h> */
 
-void dot(int size, double* m, double* v, double* d) {
+void mult(const int size, double* m, double* v, double* d) {
   double temp;
   for (int i=0; i<size; i++) {
     temp = 0.0;
@@ -30,7 +30,7 @@ void conjugate(double* A, double* b, const int size, double* x) {
   int i;
   double alpha;
 
-  dot(size, A, x, r);
+  mult(size, A, x, r);
 
   for (i=0; i<size; i++) {
     r[i] = b[i] - r[i];
@@ -43,7 +43,7 @@ void conjugate(double* A, double* b, const int size, double* x) {
   }
 
   for (int k=0; k<size; k++) {
-    dot(size, A, p, Ap);
+    mult(size, A, p, Ap);
 
     alpha = 0.0;
     for (i=0; i<size; i++) {
@@ -73,23 +73,41 @@ void conjugate(double* A, double* b, const int size, double* x) {
   
 }
 
+void read_data(const char* filename, const int size, double* A, double* b) {
+  FILE* file = fopen(filename, "r");
+  double num=0.0;
+  fscanf(file, "%lf", &num);
+  int i=0;
+  while(!feof(file)) {
+    if (i<size*size){
+      A[i] = num;
+      printf("A[%d] = %lf\n", i, num);
+    }
+    else{
+      b[i-size*size] = num;
+      printf("b[%d] = %lf\n", i, num);
+    }
+    fscanf(file, "%lf", &num);
+    i++;
+  }
+  fclose(file);
+}
+
 
 int main(int argc, char * argv[]){
   // height, width, filw
-  /* if (argc != 2) { */
-  /*   printf("Incorrect argument number!\n"); */
-  /*   return 0; */
-  /* } */
-  int size = 2;
+  if (argc != 3) {
+    printf("Incorrect argument number!\n");
+    printf("Please input size filename\n");
+    return 0;
+  }
+  const short int size = atoi(argv[1]);
+  const char* filename = argv[2];
 
   double* A = (double*)malloc(size*size*sizeof(double));
   double* b = (double*)malloc(size*sizeof(double));
-  A[0] = 4;
-  A[1] = 1;
-  A[2] = 1;
-  A[3] = 3;
-  b[0] = 1;
-  b[1] = 2;
+  read_data(filename, size, A, b);
+
   double* x = (double*)malloc(size*sizeof(double));
   conjugate(A, b, size, x);
 
