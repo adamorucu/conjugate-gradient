@@ -115,6 +115,7 @@ int main(int argc, char * argv[]){
   const short int size = atoi(argv[1]);
   const char* filename = argv[2];
 
+  for (int y=0; y<1000; y++) {
   double* A = (double*)malloc(size*size*sizeof(double));
   double* b = (double*)malloc(size*sizeof(double));
   read_data(filename, size, A, b);
@@ -122,12 +123,17 @@ int main(int argc, char * argv[]){
   double* x = (double*)malloc(size*sizeof(double));
   conjugate(A, b, size, x);
 
+  free(A);
+  free(b);
+  free(x);
+  }
+
   /* printf("X: [ "); */
   /* for (int i=0; i<size; i++) */
   /*   printf("%lf ", x[i]); */
   /* printf("]\n"); */
 
-  write_result("result.txt", size, x);
+  /* write_result("result.txt", size, x); */
   
   return 0;
 }
