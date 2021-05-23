@@ -71,6 +71,9 @@ void conjugate(double* A, double* b, const int size, double* x) {
     rs_old = rs_new;
   }
   
+  free(r);
+  free(p);
+  free(Ap);
 }
 
 void read_data(const char* filename, const int size, double* A, double* b) {
