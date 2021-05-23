@@ -81,14 +81,25 @@ void read_data(const char* filename, const int size, double* A, double* b) {
   while(!feof(file)) {
     if (i<size*size){
       A[i] = num;
-      printf("A[%d] = %lf\n", i, num);
     }
     else{
       b[i-size*size] = num;
-      printf("b[%d] = %lf\n", i, num);
     }
     fscanf(file, "%lf", &num);
     i++;
+  }
+  fclose(file);
+}
+
+void write_result(const char* filename, const int size, double* x) {
+  FILE* file;
+  file = fopen(filename, "w");
+  double num;
+  for (int i=0; i<size; i++) {
+    num = x[i];
+    char buf[50];
+    snprintf(buf, 50, "%f\n", num);
+    fputs(buf, file);
   }
   fclose(file);
 }
@@ -111,10 +122,12 @@ int main(int argc, char * argv[]){
   double* x = (double*)malloc(size*sizeof(double));
   conjugate(A, b, size, x);
 
-  printf("X: [ ");
-  for (int i=0; i<size; i++)
-    printf("%lf ", x[i]);
-  printf("]\n");
+  /* printf("X: [ "); */
+  /* for (int i=0; i<size; i++) */
+  /*   printf("%lf ", x[i]); */
+  /* printf("]\n"); */
+
+  write_result("result.txt", size, x);
   
   return 0;
 }
