@@ -5,6 +5,37 @@
 /* #include <time.h> */
 /* #include <omp.h> */
 
+void read_data(const char* filename, const int size, double* A, double* b) {
+  FILE* file = fopen(filename, "r");
+  double num=0.0;
+  fscanf(file, "%lf", &num);
+  int i=0;
+  while(!feof(file)) {
+    if (i<size*size){
+      A[i] = num;
+    }
+    else{
+      b[i-size*size] = num;
+    }
+    fscanf(file, "%lf", &num);
+    i++;
+  }
+  fclose(file);
+}
+
+void write_result(const char* filename, const int size, double* x) {
+  FILE* file;
+  file = fopen(filename, "w");
+  double num;
+  for (int i=0; i<size; i++) {
+    num = x[i];
+    char buf[50];
+    snprintf(buf, 50, "%f\n", num);
+    fputs(buf, file);
+  }
+  fclose(file);
+}
+
 void mult(const int size, double* m, double* v, double* d) {
   double temp;
   for (int i=0; i<size; i++) {
@@ -74,37 +105,6 @@ void conjugate(double* A, double* b, const int size, double* x) {
   free(r);
   free(p);
   free(Ap);
-}
-
-void read_data(const char* filename, const int size, double* A, double* b) {
-  FILE* file = fopen(filename, "r");
-  double num=0.0;
-  fscanf(file, "%lf", &num);
-  int i=0;
-  while(!feof(file)) {
-    if (i<size*size){
-      A[i] = num;
-    }
-    else{
-      b[i-size*size] = num;
-    }
-    fscanf(file, "%lf", &num);
-    i++;
-  }
-  fclose(file);
-}
-
-void write_result(const char* filename, const int size, double* x) {
-  FILE* file;
-  file = fopen(filename, "w");
-  double num;
-  for (int i=0; i<size; i++) {
-    num = x[i];
-    char buf[50];
-    snprintf(buf, 50, "%f\n", num);
-    fputs(buf, file);
-  }
-  fclose(file);
 }
 
 

@@ -20,3 +20,6 @@ if args.dim != None:
 
     with open(f"data/{args.dim}dim.txt", "w") as f:
         f.write(string)
+
+else:
+    pass
