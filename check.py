@@ -31,9 +31,13 @@ b = np.array(vec)
 x = np.array(vec2)
 left = np.dot(A, x)
 
+# print(f'A:\n{A}')
+# print(f'b:\n{b}')
+# print(f'x:\n{x}')
+# print(f'left:\n{left}')
+
 # for i in range(size):
 #     print(f'b[{i}]=\t\t{b[i]}')
 #     print(f'left[{i}]=\t{left[i]}')
 
-print(max(np.abs(left-b)))
-assert max(np.abs(left-b))<1e-4, "nonono"
+assert max(np.abs(left-b))<1e-4, f"nonono\n {max(np.abs(left-b))}"
