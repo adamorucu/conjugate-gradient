@@ -1,6 +1,6 @@
 CC = gcc
 LD = gcc
-OPT=-O3
+OPT=-Ofast
 # SSE_ARCH_FLAGS=-msse3
 
 # ARCH=-m64 $(SSE_ARCH_FLAGS) -ftree-vectorize -fopt-info-vec-missed
@@ -13,7 +13,7 @@ EXECUTABLE = conj
 conj:$(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJS)
-	$(LD) $(LDFLAGS) $(OBJS) -o $(EXECUTABLE) -lm #-lblas
+	$(LD) $(LDFLAGS) $(OBJS) -o $(EXECUTABLE) -lm -ffast-math #-lblas
 
 
 main.o: main.c
