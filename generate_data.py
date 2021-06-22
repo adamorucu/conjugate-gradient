@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.datasets import make_spd_matrix
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--dim", default=None, help="Number of dimentions", type=int, required=False)
+parser.add_argument("--size", default=None, help="Size of the matrix", type=int, required=False)
 args = parser.parse_args()
 
 if args.dim != None:
